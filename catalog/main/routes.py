@@ -55,3 +55,8 @@ def register_user():
 @main.route('/home')
 def home():
     return render_template('home_page.html')
+
+
+@main.route('/book')
+def book_results():
+    pass
