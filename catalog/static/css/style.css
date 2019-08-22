@@ -1,0 +1,81 @@
+form {
+    margin-top: 20px;
+}
+
+.heading {
+    color: white;
+    margin-right: 10px;
+}
+
+.side-kicks {
+    float: right;
+}
+
+.content-container {
+    margin-top: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto auto auto;
+    grid-row-gap: 15px;
+    grid-column-gap: 15px;
+}
+
+.item-a {
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+
+.item-b {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+}
+
+.item-c {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+.item-d {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 3;
+}
+
+.margin-none {
+    margin: 0px;
+}
+
+fieldset {
+    border: 1px solid #b5b5b5;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+fieldset > legend {
+    font-size: 1em;
+    padding-left: 10px;
+}
+
+.form-container {
+    width: 100%
+}
+
+.form-container > form {
+    width: 45%;
+    min-width: 250px;
+    max-width: 35%;
+    margin: auto;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15%;
+}
