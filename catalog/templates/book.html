@@ -5,7 +5,11 @@
         <div>
             <img src="{{ url_for('static', filename='media/cover.jpg') }}" alt="" id="book-pic">
             <div>
-                <button type="button" class="btn btn-primary" id="borrow-button">Borrowed</button>
+                {% if current_user.is_authenticated %}
+                    <button type="button" class="btn btn-primary" id="borrow-button">Borrow</button>
+                {% else %}
+                    <button type="button" class="btn btn-primary" id="borrow-button" disabled>Borrow</button>
+                {% endif %}
             </div>
         </div>
         <div id="book-details">
@@ -15,10 +19,9 @@
             <p>Rating: <span>{{ book.average_rating }}</span></p>
             <p>Number of pages: <span>{{ book.num_pages }}</span></p>
             <p>Language: <span>{{ book.language }}</span></p>
-            <p>Available: <span>{{ book.total_count }}</span></p>
             <hr>
-            <h3>Review</h3>
-            <p>{{ book.review }}</p>
+            <h3>Description</h3>
+            <p>{{ book.description }}</p>
         </div>
     </div>
 </div>

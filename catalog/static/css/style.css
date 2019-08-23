@@ -3,7 +3,7 @@
 }
 
 #book-pic {
-    width: 100%;
+    width: 85%;
     border: 1px solid #b5b5b5;
 }
 
@@ -26,6 +26,7 @@ form {
 
 .side-kicks {
     float: right;
+    margin: 8px;
 }
 
 .content-container {

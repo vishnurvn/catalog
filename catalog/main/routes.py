@@ -1,9 +1,9 @@
-from flask import render_template, Blueprint, request, redirect, flash, url_for
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import render_template, Blueprint, redirect, flash, url_for
+from flask_login import current_user, login_user, logout_user
 
 from catalog.users.forms import LoginForm, RegistrationForm
 from catalog.models import User, Book
-from catalog import db
+from catalog import db, bcrypt
 
 main = Blueprint('main', __name__)
 
@@ -15,7 +15,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and form.password.data == user.password:
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        if user and hashed_password == user.password:
             login_user(user)
             return redirect(url_for('main.home'))
         else:
@@ -36,12 +37,13 @@ def register_user():
     form = RegistrationForm()
     if form.validate_on_submit():
         if not User.query.filter_by(email=form.email.data).first():
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             # noinspection PyArgumentList
             user = User(
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
                 email=form.email.data,
-                password=form.password.data
+                password=hashed_password
             )
             db.session.add(user)
             db.session.commit()
@@ -56,8 +58,3 @@ def register_user():
 def home():
     book_list = Book.query.limit(10).all()
     return render_template('home_page.html', current_user=current_user, book_list=book_list)
-
-
-@main.route('/book')
-def book_results():
-    pass

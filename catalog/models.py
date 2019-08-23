@@ -18,7 +18,7 @@ class Book(db.Model):
     num_pages = db.Column(db.Integer, nullable=False)
     rating_count = db.Column(db.Integer, nullable=False)
     text_review_count = db.Column(db.Integer, nullable=False)
-    review = db.Column(db.String(1000), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
     total_count = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
