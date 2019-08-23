@@ -1,0 +1,21 @@
+{% extends './nav.html' %}
+{% block content %}
+<div class="content-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in user_list %}
+                <tr>
+                    <td><a href="{{ url_for('users.display_profile', username=user.username) }}">{{ user.full_name }}</a></td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

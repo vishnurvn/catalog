@@ -1,17 +1,23 @@
 {% extends 'nav.html' %}
 {% block content %}
 <div class="content-container">
-    <div class="grid-container">
+    <div class="grid-container grid-row-profile">
         <div class="item-a">
             <div class="card">
                 <div class="card-body">
-                    <img src="https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_oc=AQkuy1qiqXchWH0TG1nf5pNu3-K35RyPMzsQ5Q1dADSWJ3FUsUGppJX1IKjGUwIG27c&_nc_ht=scontent-sin2-2.xx&oh=6aa67a18eda37bff873a87d4dc124840&oe=5DE21BE9" alt="">
+                    <img src="https://scontent-sin2-2.xx.fbcdn.net/v/t1.0-9/16196015_10154888128487744_6901111466535510271_n.png?_nc_cat=103&_nc_oc=AQkuy1qiqXchWH0TG1nf5pNu3-K35RyPMzsQ5Q1dADSWJ3FUsUGppJX1IKjGUwIG27c&_nc_ht=scontent-sin2-2.xx&oh=6aa67a18eda37bff873a87d4dc124840&oe=5DE21BE9" id="display-pic" alt="">
                     <hr>
                     <div>
-                        <p id="name">Name</p>
-                        <p id="address">Address</p>
-                        <p id="phone-number">Phone number</p>
-                        <p id="some-text">Hello world</p>
+                        <div>
+                            <span class="badge badge-primary">User</span>
+                            {% if user_details.is_admin %}
+                                <span class="badge badge-success">Librarian</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <p id="name">{{ user_details.full_name }}</p>
+                            <p id="email">{{ user_details.email }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -19,7 +25,7 @@
         <div class="item-b">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="section-header">Description</h4>
+                    <h4 class="section-header">About</h4>
                     <hr>
                     <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit quam, egestas non sapien non, elementum tristique risus. Maecenas ex arcu, blandit porttitor euismod eget, tincidunt sed magna. Etiam sit amet vestibulum nisl. Aliquam neque ipsum, vestibulum vel ex mollis, aliquet accumsan nulla.</p>
                 </div>
@@ -28,7 +34,7 @@
         <div class="item-c">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="section-header">Description</h4>
+                    <h4 class="section-header">Books borrowed</h4>
                     <hr>
                     <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit quam, egestas non sapien non, elementum tristique risus. Maecenas ex arcu, blandit porttitor euismod eget, tincidunt sed magna. Etiam sit amet vestibulum nisl. Aliquam neque ipsum, vestibulum vel ex mollis, aliquet accumsan nulla.Suspendisse potenti. Nulla neque lectus, bibendum sit amet pellentesque id, sollicitudin in dui. Fusce ut orci sit amet nibh rutrum fermentum ut at leo. Aliquam condimentum, tortor ac sodales scelerisque, leo nunc placerat tellus, a eleifend arcu neque eget lorem. Ut mollis ligula eu ligula fermentum pulvinar ut aliquam dolor. Aliquam consequat metus sit amet ante mattis, ut finibus lectus mattis. Donec vitae varius nunc. Integer vitae velit a felis blandit molestie eu non libero. Mauris pellentesque nisl vel pulvinar posuere. Nullam et neque ac libero euismod finibus at quis orci. Sed rhoncus quam eu tempus fermentum. Aenean nec turpis quis quam ultrices sodales vitae vel mi. Etiam sodales vitae tortor ac consequat. Nunc rutrum convallis nibh nec aliquet. Duis pretium lectus tortor, ut tempor odio rhoncus eu. Etiam accumsan vitae libero et mollis. Sed non porttitor augue. Nullam non sem non mi varius finibus non non quam. Phasellus porttitor erat vitae gravida cursus. Phasellus arcu sem, aliquet maximus diam ac, tincidunt finibus enim. In hac habitasse platea dictumst.</p>
                 </div>

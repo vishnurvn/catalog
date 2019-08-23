@@ -1,0 +1,28 @@
+{% extends 'nav.html' %}
+{% block content %}
+<div class="content-container">
+    <div class="grid-container">
+        <div>
+            <img src="{{ url_for('static', filename='media/cover.jpg') }}" alt="" id="book-pic">
+            <div>
+                <button type="button" class="btn btn-primary" id="borrow-button">Borrowed</button>
+            </div>
+        </div>
+        <div id="book-details">
+            <h2>{{ book.title }}</h2>
+            <h4>by {{ book.author }}</h4>
+            <p>ISBN: <span>{{ book.isbn }}</span></p>
+            <p>Rating: <span>{{ book.average_rating }}</span></p>
+            <p>Number of pages: <span>{{ book.num_pages }}</span></p>
+            <p>Language: <span>{{ book.language }}</span></p>
+            <p>Available: <span>{{ book.total_count }}</span></p>
+            <hr>
+            <h3>Review</h3>
+            <p>{{ book.review }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script_block %}
+<script src="{{ url_for('static', filename='scripts/book_page_scripts.js') }}"></script>
+{% endblock %}

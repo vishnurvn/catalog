@@ -1,14 +1,13 @@
 from flask import render_template, Blueprint, request, redirect, flash, url_for
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 
 from catalog.users.forms import LoginForm, RegistrationForm
-from catalog.models import User
+from catalog.models import User, Book
 from catalog import db
 
 main = Blueprint('main', __name__)
 
 
-@main.route('/', methods=['GET', 'POST'])
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -52,9 +51,11 @@ def register_user():
     return render_template('form.html', form=form)
 
 
+@main.route('/')
 @main.route('/home')
 def home():
-    return render_template('home_page.html')
+    book_list = Book.query.limit(10).all()
+    return render_template('home_page.html', current_user=current_user, book_list=book_list)
 
 
 @main.route('/book')

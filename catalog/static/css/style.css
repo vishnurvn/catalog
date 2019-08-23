@@ -1,3 +1,20 @@
+#display-pic {
+    width: 100%;
+}
+
+#book-pic {
+    width: 100%;
+    border: 1px solid #b5b5b5;
+}
+
+#book-details {
+    padding-left: 10px;
+}
+
+#borrow-button {
+    margin-top: 10px;
+}
+
 form {
     margin-top: 20px;
 }
@@ -12,15 +29,18 @@ form {
 }
 
 .content-container {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: 30% 70%;
-    grid-template-rows: auto auto auto;
+    grid-template-columns: 25% 75%;
     grid-row-gap: 15px;
     grid-column-gap: 15px;
+}
+
+.grid-row-profile {
+    grid-template-rows: auto auto auto;
 }
 
 .item-a {

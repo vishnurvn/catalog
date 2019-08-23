@@ -1,14 +1,21 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
+from flask_login import login_required, current_user
+
+from catalog.models import User
 
 
 users = Blueprint('users', __name__)
 
 
-@users.route('/home')
-def home():
-    return render_template('home_page.html')
+@users.route('/users')
+def display_users():
+    if current_user.is_admin:
+        user_list = User.query.all()
+        return render_template('admin/user_list.html', user_list=user_list)
+    return redirect(url_for('main.home'))
 
 
-@users.route('/profile/user')
-def display_profile():
-    return render_template('profile.html')
+@users.route('/user/<string:username>')
+def display_profile(username):
+    user = User.query.filter_by(username=username).first()
+    return render_template('profile.html', user_details=user)
