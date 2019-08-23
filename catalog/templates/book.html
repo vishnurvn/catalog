@@ -3,25 +3,46 @@
 <div class="content-container">
     <div class="grid-container">
         <div>
-            <img src="{{ url_for('static', filename='media/cover.jpg') }}" alt="" id="book-pic">
-            <div>
-                {% if current_user.is_authenticated %}
-                    <button type="button" class="btn btn-primary" id="borrow-button">Borrow</button>
-                {% else %}
-                    <button type="button" class="btn btn-primary" id="borrow-button" disabled>Borrow</button>
-                {% endif %}
+            <div class="card">
+                <div class="card-body">
+                    <img src="{{ url_for('static', filename='media/cover.jpg') }}" alt="" id="book-pic">
+                    <hr>
+                    <div>
+                        {% if book.is_borrowed %}
+                            {% if book.borrower == current_user %}
+                                <button type="button" class="btn btn-success" id="borrow-button" disabled>Borrowed</button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary" id="borrow-button" disabled>Unavailable</button>
+                                <div>
+                                    <p>Next available: <span>{{ book.next_available() }}</span></p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {% if current_user.is_authenticated %}
+                                <button type="button" class="btn btn-primary" id="borrow-button" value="{{ book.id }}">Borrow</button>
+                            {% else %}
+                                <button type="button" class="btn btn-primary" id="borrow-button" disabled>Borrow</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
-        <div id="book-details">
-            <h2>{{ book.title }}</h2>
-            <h4>by {{ book.author }}</h4>
-            <p>ISBN: <span>{{ book.isbn }}</span></p>
-            <p>Rating: <span>{{ book.average_rating }}</span></p>
-            <p>Number of pages: <span>{{ book.num_pages }}</span></p>
-            <p>Language: <span>{{ book.language }}</span></p>
-            <hr>
-            <h3>Description</h3>
-            <p>{{ book.description }}</p>
+        <div class="card">
+            <div class="card-body">
+                <div id="book-details">
+                    <h2>{{ book.title }}</h2>
+                    <h4>by {{ book.author }}</h4>
+                    <hr>
+                    <p>ISBN: <span>{{ book.isbn }}</span></p>
+                    <p>Rating: <span>{{ book.average_rating }}</span></p>
+                    <p>Number of pages: <span>{{ book.num_pages }}</span></p>
+                    <p>Language: <span>{{ book.language }}</span></p>
+                    <hr>
+                    <h3>Description</h3>
+                    <p>{{ book.description }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

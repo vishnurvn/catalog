@@ -1,9 +1,13 @@
+p {
+    margin-bottom: 3px;
+}
+
 #display-pic {
     width: 100%;
 }
 
 #book-pic {
-    width: 85%;
+    width: 100%;
     border: 1px solid #b5b5b5;
 }
 

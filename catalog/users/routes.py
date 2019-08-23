@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from catalog.models import User
-
+from catalog.models import User, Book
 
 users = Blueprint('users', __name__)
 
@@ -18,4 +17,5 @@ def display_users():
 @users.route('/user/<string:username>')
 def display_profile(username):
     user = User.query.filter_by(username=username).first()
-    return render_template('profile.html', user_details=user)
+    books = Book.query.filter_by(borrower=user).all()
+    return render_template('profile.html', user_details=user, books=books)

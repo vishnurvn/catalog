@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from flask_login import UserMixin
 
 from catalog import db, login_manager
@@ -20,13 +22,19 @@ class Book(db.Model):
     text_review_count = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     total_count = db.Column(db.Integer, nullable=False)
+    is_borrowed = db.Column(db.Boolean, unique=False, default=False)
+    borrowed_date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '{}'.format(self.title)
 
+    def next_available(self):
+        return (self.borrowed_date + timedelta(days=3)).date()
+
 
 class User(db.Model, UserMixin):
+    BORROW_LIMIT = 4
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
@@ -42,3 +50,6 @@ class User(db.Model, UserMixin):
     @property
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+    def borrow_book(self):
+        pass

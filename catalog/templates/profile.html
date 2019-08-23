@@ -16,38 +16,37 @@
                             <hr>
                         </div>
                         <div>
-                            <p id="name">{{ user_details.full_name }}</p>
-                            <p id="username"><span>@</span>{{ user_details.username }}</p>
-                            <p id="email">{{ user_details.email }}</p>
+                            <p id="name"><span>Name: </span>{{ user_details.full_name }}</p>
+                            <p id="username"><span>Username: </span>{{ user_details.username }}</p>
+                            <p id="email"><span>Email: </span>{{ user_details.email }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="item-b">
+        <div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="section-header">About</h4>
+                    <h4 class="section-header">Borrowed Books</h4>
                     <hr>
-                    <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit quam, egestas non sapien non, elementum tristique risus. Maecenas ex arcu, blandit porttitor euismod eget, tincidunt sed magna. Etiam sit amet vestibulum nisl. Aliquam neque ipsum, vestibulum vel ex mollis, aliquet accumsan nulla.</p>
-                </div>
-            </div>
-        </div>
-        <div class="item-c">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="section-header">Books borrowed</h4>
-                    <hr>
-                    <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit quam, egestas non sapien non, elementum tristique risus. Maecenas ex arcu, blandit porttitor euismod eget, tincidunt sed magna. Etiam sit amet vestibulum nisl. Aliquam neque ipsum, vestibulum vel ex mollis, aliquet accumsan nulla.Suspendisse potenti. Nulla neque lectus, bibendum sit amet pellentesque id, sollicitudin in dui. Fusce ut orci sit amet nibh rutrum fermentum ut at leo. Aliquam condimentum, tortor ac sodales scelerisque, leo nunc placerat tellus, a eleifend arcu neque eget lorem. Ut mollis ligula eu ligula fermentum pulvinar ut aliquam dolor. Aliquam consequat metus sit amet ante mattis, ut finibus lectus mattis. Donec vitae varius nunc. Integer vitae velit a felis blandit molestie eu non libero. Mauris pellentesque nisl vel pulvinar posuere. Nullam et neque ac libero euismod finibus at quis orci. Sed rhoncus quam eu tempus fermentum. Aenean nec turpis quis quam ultrices sodales vitae vel mi. Etiam sodales vitae tortor ac consequat. Nunc rutrum convallis nibh nec aliquet. Duis pretium lectus tortor, ut tempor odio rhoncus eu. Etiam accumsan vitae libero et mollis. Sed non porttitor augue. Nullam non sem non mi varius finibus non non quam. Phasellus porttitor erat vitae gravida cursus. Phasellus arcu sem, aliquet maximus diam ac, tincidunt finibus enim. In hac habitasse platea dictumst.</p>
-                </div>
-            </div>
-        </div>
-        <div class="item-d">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="section-header">Description</h4>
-                    <hr>
-                    <p class="section-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit quam, egestas non sapien non, elementum tristique risus. Maecenas ex arcu, blandit porttitor euismod eget, tincidunt sed magna. Etiam sit amet vestibulum nisl. Aliquam neque ipsum, vestibulum vel ex mollis, aliquet accumsan nulla. Etiam sodales vitae tortor ac consequat. Nunc rutrum convallis nibh nec aliquet. Duis pretium lectus tortor, ut tempor odio rhoncus eu. Etiam accumsan vitae libero et mollis. Sed non porttitor augue. Nullam non sem non mi varius finibus non non quam. Phasellus porttitor erat vitae gravida cursus. Phasellus arcu sem, aliquet maximus diam ac, tincidunt finibus enim. In hac habitasse platea dictumst.</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td><strong>Book Title</strong></td>
+                                <td><strong>ISBN</strong></td>
+                                <td><strong>Due date</strong></td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                                <tr>
+                                    <td><a href="{{ url_for('books.display_book_details', book_id=book.id) }}">{{ book.title }}</a></td>
+                                    <td>{{ book.isbn }}</td>
+                                    <td>{{ book.next_available() }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

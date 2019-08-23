@@ -1,9 +1,10 @@
 import csv
-import random
 import os
+import random
+from datetime import datetime
 
-from catalog.models import User, Book
 from catalog import db, create_app, bcrypt
+from catalog.models import User, Book
 
 app = create_app()
 
@@ -14,7 +15,8 @@ user_data = 'MOCK_DATA.csv'
 book_data = 'books.csv'
 review_data = 'review.txt'
 
-if 'site.db' in os.listdir('./catalog'):
+
+if 'site.db' in os.listdir(db_path):
     os.remove(os.path.join(db_path, 'site.db'))
 
 with app.app_context():
@@ -33,6 +35,7 @@ with app.app_context():
                     password=hashed_password, is_admin=True)
         db.session.add(user)
         db.session.commit()
+        users = User.query.all()
 
     with open(os.path.join(data_path, book_data), 'r') as file:
         csv_reader = csv.DictReader(file, delimiter=',')
@@ -51,9 +54,15 @@ with app.app_context():
             for int_able in int_able_list:
                 row[int_able] = int(row.pop(int_able))
             row['average_rating'] = float(row.pop('average_rating'))
-            book = Book(**row, total_count=random.randint(1, 5), description=description)
+            borrow_book = random.choice([True, False])
+            if borrow_book:
+                user = random.choice(users)
+                book = Book(**row, total_count=random.randint(1, 5), description=description,
+                            borrower=user, is_borrowed=True, borrowed_date=datetime.now())
+            else:
+                book = Book(**row, total_count=random.randint(1, 5), description=description)
             db.session.add(book)
             db.session.commit()
 
-    print(len(User.query.all()))
+    print(len(users))
     print(len(Book.query.all()))
