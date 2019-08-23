@@ -1,9 +1,9 @@
 from flask import render_template, Blueprint, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user
 
-from catalog.users.forms import LoginForm, RegistrationForm
-from catalog.models import User, Book
 from catalog import db, bcrypt
+from catalog.models import User, Book
+from catalog.users.forms import LoginForm, RegistrationForm
 
 main = Blueprint('main', __name__)
 
@@ -14,9 +14,8 @@ def login():
         return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        if user and hashed_password == user.password:
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('main.home'))
         else:
@@ -40,10 +39,12 @@ def register_user():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             # noinspection PyArgumentList
             user = User(
+                username=form.username.data,
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
                 email=form.email.data,
-                password=hashed_password
+                password=hashed_password,
+                is_admin=False
             )
             db.session.add(user)
             db.session.commit()

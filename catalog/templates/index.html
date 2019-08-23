@@ -27,9 +27,9 @@
             {% endif %}
             <div class="form-col">
                 <div class="form-group">
-                    {{ form.email(class="form-control", placeholder="Email") }}
-                    {% if form.email.errors %}
-                        {% for error in form.email.errors %}
+                    {{ form.username(class="form-control", placeholder="Username") }}
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
                         <div class="alert alert-danger" role="alert">
                             {{ error }}
                         </div>

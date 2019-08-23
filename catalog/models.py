@@ -28,7 +28,7 @@ class Book(db.Model):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), unique=True)
+    username = db.Column(db.String(30), unique=True, nullable=False)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100))
     email = db.Column(db.String(100), nullable=False, unique=True)

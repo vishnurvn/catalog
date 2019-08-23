@@ -13,9 +13,11 @@
                             {% if user_details.is_admin %}
                                 <span class="badge badge-success">Librarian</span>
                             {% endif %}
+                            <hr>
                         </div>
                         <div>
                             <p id="name">{{ user_details.full_name }}</p>
+                            <p id="username"><span>@</span>{{ user_details.username }}</p>
                             <p id="email">{{ user_details.email }}</p>
                         </div>
                     </div>
