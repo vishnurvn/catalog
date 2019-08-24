@@ -57,5 +57,5 @@ def register_user():
 @main.route('/')
 @main.route('/home')
 def home():
-    book_list = Book.query.limit(10).all()
-    return render_template('home_page.html', current_user=current_user, book_list=book_list)
+    num_pages = Book.query.paginate().pages
+    return render_template('home_page.html', current_user=current_user, num_pages=num_pages)

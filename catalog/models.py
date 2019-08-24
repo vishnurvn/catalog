@@ -32,6 +32,9 @@ class Book(db.Model):
     def next_available(self):
         return (self.borrowed_date + timedelta(days=3)).date()
 
+    def availability(self):
+        return 'Unavailable' if self.is_borrowed else 'Available'
+
 
 class User(db.Model, UserMixin):
     BORROW_LIMIT = 4

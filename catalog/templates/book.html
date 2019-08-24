@@ -21,7 +21,7 @@
                             {% if current_user.is_authenticated %}
                                 <button type="button" class="btn btn-primary" id="borrow-button" value="{{ book.id }}">Borrow</button>
                             {% else %}
-                                <button type="button" class="btn btn-primary" id="borrow-button" disabled>Borrow</button>
+                                <button type="button" class="btn btn-primary" id="borrow-button" data-toggle="tooltip" data-placement="top" title="Login to borrow this book" disabled>Borrow</button>
                             {% endif %}
                         {% endif %}
                     </div>
