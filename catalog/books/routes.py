@@ -1,5 +1,3 @@
-import time
-
 from flask import render_template, Blueprint, jsonify, request
 from flask_login import current_user
 
@@ -23,7 +21,6 @@ def get_book_list():
             'rating': book.average_rating,
             'availability': book.availability()
         })
-    time.sleep(2)
     return jsonify(book_details)
 
 

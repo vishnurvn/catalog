@@ -7,21 +7,34 @@ toggleSpinner = () => {
 }
 
 setCurrentPage = (elem) => {
-	let pageLinkNode = document.createElement('span')
-	pageLinkNode.setAttribute('class', 'page-link')
-	let currentSpanNode = document.createElement('span')
-	pageLinkNode.textContent = elem.textContent
-	currentSpanNode.setAttribute('class', 'sr-only')
-	currentSpanNode.textContent = '(current)'
-
-	pageLinkNode.append(currentSpanNode)
-	return pageLinkNode
+	let elements = document.getElementsByClassName('page-numbers')
+	let elementArray = [...elements]
+	elementArray.forEach((element) => {
+		let val = element.firstElementChild.value
+		if (element.firstElementChild === elem) {
+			let srSpan = document.createElement('span')
+			srSpan.setAttribute('class', 'sr-only')
+			srSpan.textContent = '(current)'
+			while (element.firstElementChild.hasChildNodes()) {
+				element.firstElementChild.firstChild.remove()
+			}
+			let pageNumNode = document.createTextNode(val)
+			element.classList.add('active')
+			element.firstElementChild.append(pageNumNode)
+			element.firstElementChild.append(srSpan)
+		} else {
+			let pageNumNode = document.createTextNode(val)
+			while (element.firstElementChild.hasChildNodes()) {
+				element.firstElementChild.firstChild.remove()
+			}
+			element.firstElementChild.append(pageNumNode)
+			element.classList.remove('active')
+		}
+	})
 }
 
 getBookList = (page, element) => {
-	let newElement = setCurrentPage(element.firstChild)
-	element.removeChild(element.firstChild)
-	element.append(newElement)
+	setCurrentPage(element)
 
 	toggleSpinner()
 	
@@ -71,7 +84,7 @@ getBookList = (page, element) => {
 
 window.onload = () => {
 	let pageOne = document.getElementsByClassName('page-numbers')[0]
-	pageOne.firstChild.click()
+	pageOne.firstElementChild.click()
 }
 
 searchField.addEventListener('change', () => {

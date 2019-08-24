@@ -58,4 +58,4 @@ def register_user():
 @main.route('/home')
 def home():
     num_pages = Book.query.paginate().pages
-    return render_template('home_page.html', current_user=current_user, num_pages=num_pages)
+    return render_template('login.html', current_user=current_user, num_pages=num_pages)
