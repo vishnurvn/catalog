@@ -2,6 +2,28 @@ p {
     margin-bottom: 3px;
 }
 
+.book-list {
+    position: relative;
+}
+
+#spinner-wrapper {
+    position: absolute;
+    background-color: white;
+    opacity: 0.8;
+    height: 100%;
+    width: 100%;
+}
+
+#spinner-wrapper > #loading-spinner {
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+.display-spinner {
+    display: none;
+}
+
 #display-pic {
     width: 100%;
 }

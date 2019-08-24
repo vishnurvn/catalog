@@ -1,7 +1,30 @@
 let searchField = document.getElementById('search-book')
 let homeFlag = document.getElementById('flag')
 
-getBookList = (page) => {
+toggleSpinner = () => {
+	let spinner = document.getElementById('spinner-wrapper')
+	spinner.classList.toggle('display-spinner')
+}
+
+setCurrentPage = (elem) => {
+	let pageLinkNode = document.createElement('span')
+	pageLinkNode.setAttribute('class', 'page-link')
+	let currentSpanNode = document.createElement('span')
+	pageLinkNode.textContent = elem.textContent
+	currentSpanNode.setAttribute('class', 'sr-only')
+	currentSpanNode.textContent = '(current)'
+
+	pageLinkNode.append(currentSpanNode)
+	return pageLinkNode
+}
+
+getBookList = (page, element) => {
+	let newElement = setCurrentPage(element.firstChild)
+	element.removeChild(element.firstChild)
+	element.append(newElement)
+
+	toggleSpinner()
+	
 	const url = 'http://127.0.0.1:5000/get_book_list'
 	let data = {
 		'page': page
@@ -18,15 +41,12 @@ getBookList = (page) => {
 		}
 	).then(
 		data => {
-			console.clear()
-			console.log(data)
 			let keys = ['author', 'isbn', 'rating', 'availability']
 			let bookListTableBody = document.getElementById('book-list-data')
-			console.log(page)
-
 			while (bookListTableBody.hasChildNodes()) {
 				bookListTableBody.removeChild(bookListTableBody.firstChild)
 			}
+			toggleSpinner()
 			data.forEach((item) => {
 				let rowElement = document.createElement('tr')
 				let dataElement = document.createElement('td')
@@ -50,7 +70,8 @@ getBookList = (page) => {
 }
 
 window.onload = () => {
-	getBookList(1)
+	let pageOne = document.getElementsByClassName('page-numbers')[0]
+	pageOne.firstChild.click()
 }
 
 searchField.addEventListener('change', () => {

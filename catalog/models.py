@@ -1,8 +1,9 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from flask_login import UserMixin
 
 from catalog import db, login_manager
+from catalog.exceptions import BorrowLimitExceeded
 
 
 @login_manager.user_loader
@@ -35,6 +36,13 @@ class Book(db.Model):
     def availability(self):
         return 'Unavailable' if self.is_borrowed else 'Available'
 
+    def borrow_book(self, user):
+        if user.num_borrowed_books >= user.BORROW_LIMIT:
+            raise BorrowLimitExceeded('Borrow limit exceeded')
+        self.is_borrowed = True
+        self.borrower = user
+        self.borrowed_date = datetime.now()
+
 
 class User(db.Model, UserMixin):
     BORROW_LIMIT = 4
@@ -46,6 +54,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
     is_admin = db.Column(db.Boolean, unique=False, default=False)
     books = db.relationship('Book', backref='borrower', lazy=True)
+    num_borrowed_books = db.Column(db.Integer, nullable=False, default=0)
 
     def __repr__(self):
         return '{}_{}'.format(self.username, 'admin' if self.is_admin else 'normal')
@@ -54,5 +63,3 @@ class User(db.Model, UserMixin):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
-    def borrow_book(self):
-        pass
