@@ -20,7 +20,7 @@ def login():
             return redirect(url_for('main.home'))
         else:
             flash('Login unsuccessful. Check your username or password', 'danger')
-    return render_template('index.html', title='Login', form=form)
+    return render_template('login.html', title='Login', form=form)
 
 
 @main.route('/logout')
@@ -58,4 +58,4 @@ def register_user():
 @main.route('/home')
 def home():
     num_pages = Book.query.paginate().pages
-    return render_template('login.html', current_user=current_user, num_pages=num_pages)
+    return render_template('home.html', current_user=current_user, num_pages=num_pages)

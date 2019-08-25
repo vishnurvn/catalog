@@ -1,44 +1,58 @@
-{% extends 'nav.html' %}
-{% block content %}
+{% extends 'base.html' %}
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <h2 class="heading">Catalog</h2>
+    </div>
+</nav>
 <div class="content-container">
-    <div class="form-group">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="search-book">
-    </div>
-    <a>Advanced search</a>
-    <div class="book-list">
-        <div id="spinner-wrapper" class="display-spinner">
-            <div class="spinner-border text-success" id="loading-spinner" role="status">
-                <span class="sr-only">Loading...</span>
+    <div class="form-container">
+        <form class="margin-none" method="POST">
+            {{ form.hidden_tag() }}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="form-col">
+                <div class="form-group">
+                    {{ form.username(class="form-control", placeholder="Username") }}
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password(class="form-control", placeholder="Password") }}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group margin-none">
+                    {{ form.submit(class="btn btn-primary") }}
+                    <a class="side-kicks" href="{{ url_for('main.register_user') }}">New User?</a>
+                    <a class="side-kicks" href="{{ url_for('main.home') }}">Home</a>
+                </div>
             </div>
-        </div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Authors</th>
-                <th>ISBN</th>
-                <th>Rating</th>
-                <th>Availability</th>
-            </tr>
-            </thead>
-            <tbody id="book-list-data">
-            </tbody>
-        </table>
+        </form>
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            {% for i in range(1, num_pages+1) %}
-            <li class="page-item page-numbers">
-                <button class="page-link" onclick="getBookList({{i}}, this)" value="{{ i }}">{{ i }}</button>
-            </li>
-            {% endfor %}
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-    </nav>
 </div>
-{% endblock %}
-{% block script_block %}
-<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
-<script src="{{ url_for('static', filename='react_components/book_grid.js') }}" type="text/jsx"></script>
 {% endblock %}
