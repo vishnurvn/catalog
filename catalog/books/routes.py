@@ -11,9 +11,12 @@ books = Blueprint('books', __name__)
 def get_book_list():
     page = request.json['page']
     book_list = Book.query.paginate(page=page, per_page=10)
-    book_details = []
+    data = {
+        'num_pages': [idx for idx in range(book_list.pages)],
+    }
+    book_data = []
     for book in book_list.items:
-        book_details.append({
+        book_data.append({
             'id': book.id,
             'title': book.title,
             'author': book.author,
@@ -21,7 +24,8 @@ def get_book_list():
             'rating': book.average_rating,
             'availability': book.availability()
         })
-    return jsonify(book_details)
+    data['book_data'] = book_data
+    return jsonify(data)
 
 
 @books.route('/book/<int:book_id>')

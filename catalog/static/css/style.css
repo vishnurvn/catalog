@@ -2,6 +2,19 @@ p {
     margin-bottom: 3px;
 }
 
+#search-filter { 
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#advanced-search-collapse, #filter-collapse {
+    margin-bottom: 10px;
+}
+
+#search-filter > span:nth-child(2) {
+    float: right;
+}
+
 .book-list {
     position: relative;
 }
