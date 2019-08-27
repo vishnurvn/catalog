@@ -11,10 +11,16 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+author_mapping = db.Table(
+    'author_mapping',
+    db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id'))
+)
+
+
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
-    author = db.Column(db.String(200), nullable=False)
     average_rating = db.Column(db.Float, nullable=False)
     isbn = db.Column(db.String(10), nullable=False, unique=True)
     language = db.Column(db.String(20), nullable=False)
@@ -26,6 +32,7 @@ class Book(db.Model):
     is_borrowed = db.Column(db.Boolean, unique=False, default=False)
     borrowed_date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    author = db.relationship('Author', secondary=author_mapping, backref=db.backref('book', lazy='dynamic'))
 
     def __repr__(self):
         return '{}'.format(self.title)
@@ -42,6 +49,11 @@ class Book(db.Model):
         self.is_borrowed = True
         self.borrower = user
         self.borrowed_date = datetime.now()
+
+
+class Author(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
 
 
 class User(db.Model, UserMixin):
@@ -62,4 +74,3 @@ class User(db.Model, UserMixin):
     @property
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
-
