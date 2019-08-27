@@ -4,7 +4,7 @@ import random
 from datetime import datetime
 
 from catalog import db, create_app, bcrypt
-from catalog.models import User, Book
+from catalog.models import User, Book, Author
 
 app = create_app()
 
@@ -21,6 +21,20 @@ if 'site.db' in os.listdir(db_path):
 
 with app.app_context():
     db.create_all()
+
+    with open(os.path.join(data_path, book_data), 'r', encoding='utf-8') as file:
+        csv_reader = csv.DictReader(file, delimiter=',')
+        author_list = set()
+        for row in csv_reader:
+            authors = row['author'].split('-')
+            for author in authors:
+                author_list.add(author)
+
+        for author_name in author_list:
+            author = Author(name=author_name)
+            db.session.add(author)
+        db.session.commit()
+
     with open(os.path.join(data_path, user_data)) as file:
         csv_reader = csv.DictReader(file, delimiter=',')
         for row in csv_reader:
@@ -37,7 +51,7 @@ with app.app_context():
         db.session.commit()
         users = User.query.all()
 
-    with open(os.path.join(data_path, book_data), 'r') as file:
+    with open(os.path.join(data_path, book_data), 'r', encoding='utf-8') as file:
         csv_reader = csv.DictReader(file, delimiter=',')
         for row in csv_reader:
 
@@ -55,12 +69,17 @@ with app.app_context():
                 row[int_able] = int(row.pop(int_able))
             row['average_rating'] = float(row.pop('average_rating'))
             borrow_book = random.choice([True, False])
+            authors = row.pop('author').split('-')
             if borrow_book:
                 user = random.choice(users)
                 book = Book(**row, total_count=random.randint(1, 5), description=description,
                             borrower=user, is_borrowed=True, borrowed_date=datetime.now())
             else:
                 book = Book(**row, total_count=random.randint(1, 5), description=description)
+            for author_name in authors:
+                author = Author.query.filter_by(name=author_name).first()
+                book.author.append(author)
+
             db.session.add(book)
             db.session.commit()
 

@@ -5,7 +5,7 @@ bookID,title,author,average_rating,isbn,isbn13,language,num_pages,rating_count,t
 4,Harry Potter and the Chamber of Secrets (Harry Potter  #2),J.K. Rowling,4.41,439554896,9.78E+12,eng,352,6267,272
 5,Harry Potter and the Prisoner of Azkaban (Harry Potter  #3),J.K. Rowling-Mary GrandPré,4.55,043965548X,9.78E+12,eng,435,2149872,33964
 8,Harry Potter Boxed Set  Books 1-5 (Harry Potter  #1-5),J.K. Rowling-Mary GrandPré,4.78,439682584,9.78E+12,eng,2690,38872,154
-9,"Unauthorized Harry Potter Book Seven News: ""Half-Blood Prince"" Analysis and Speculation",W. Frederick Zimmerman,3.69,976540606,9.78E+12,en-US,152,18,1
+9,"""Unauthorized Harry Potter Book Seven News: """"Half-Blood Prince"""" Analysis and Speculation""",W. Frederick Zimmerman,3.69,976540606,9.78E+12,en-US,152,18,1
 10,Harry Potter Collection (Harry Potter  #1-6),J.K. Rowling,4.73,439827604,9.78E+12,eng,3342,27410,820
 12,The Ultimate Hitchhiker's Guide: Five Complete Novels and One Story (Hitchhiker's Guide to the Galaxy  #1-5),Douglas Adams,4.38,517226952,9.78E+12,eng,815,3602,258
 13,The Ultimate Hitchhiker's Guide to the Galaxy,Douglas Adams,4.38,345453743,9.78E+12,eng,815,240189,3954
@@ -32,7 +32,7 @@ bookID,title,author,average_rating,isbn,isbn13,language,num_pages,rating_count,t
 40,Cooking with Fernet Branca (Gerald Samper  #1),James Hamilton-Paterson,3.61,193337201X,9.78E+12,eng,288,1214,202
 45,Agile Web Development with Rails: A Pragmatic Guide,Dave Thomas-David Heinemeier Hansson-Leon Breedt-Mike Clark-Thomas  Fuchs-Andreas  Schwarz,3.89,097669400X,9.78E+12,eng,558,1269,59
 50,Hatchet,Gary Paulsen,3.7,689840926,9.78E+12,eng,208,254827,11346
-51,"Hatchet: A Guide for Using ""Hatchet"" in the Classroom",Donna Ickes-Edward Sciranko-Keith Vasconcelles,3.97,1557344493,9.78E+12,eng,48,35,2
+51,"""Hatchet: A Guide for Using """"Hatchet"""" in the Classroom""",Donna Ickes-Edward Sciranko-Keith Vasconcelles,3.97,1557344493,9.78E+12,eng,48,35,2
 53,Guts: The True Stories behind Hatchet and the Brian Books,Gary Paulsen,3.87,385326505,9.78E+12,eng,144,1996,326
 54,Molly Hatchet - 5 of the Best,Molly Hatchet,4.33,1575606240,9.78E+12,eng,56,6,0
 55,Hatchet Jobs: Writings on Contemporary Fiction,Dale Peck,3.48,1595580271,9.78E+12,en-US,228,99,16
@@ -97,3 +97,7 @@ bookID,title,author,average_rating,isbn,isbn13,language,num_pages,rating_count,t
 152,Anna Karenina,Leo Tolstoy-David Magarshack-Priscilla Meyer,4.04,451528611,9.78E+12,eng,960,108970,5694
 153,Anna Karenina,Leo Tolstoy-Richard Pevear-Larissa Volokhonsky-John Bayley,4.04,140449175,9.78E+12,eng,837,2835,300
 154,CliffsNotes on Tolstoy's Anna Karenina,Marianne Sturman-Leo Tolstoy,3.89,822001837,9.78E+12,eng,80,15,3
+155,Anna Karenina,Leo Tolstoy-Amy Mandelker-Constance Garnett,4.04,1593080271,9.78E+12,eng,803,9362,710
+156,Anna Karenina,Leo Tolstoy-Louise Maude-Aylmer Maude,4.04,486437965,9.78E+12,eng,752,460,71
+157,Anna Karenina,Leo Tolstoy-Constance Garnett-Amy Mandelker,4.04,1593081774,9.78E+12,eng,803,298,47
+159,Dinner with Anna Karenina,Gloria Goldreich,2.96,778322270,9.78E+12,eng,368,400,64
