@@ -19,12 +19,13 @@ def get_book_list():
         book_data.append({
             'id': book.id,
             'title': book.title,
-            'author': book.author,
+            'author': [author.name for author in book.author],
             'isbn': book.isbn,
             'rating': book.average_rating,
             'availability': book.availability()
         })
     data['book_data'] = book_data
+    data['page_num'] = page
     return jsonify(data)
 
 

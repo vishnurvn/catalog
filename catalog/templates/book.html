@@ -53,7 +53,12 @@
             <div class="card-body">
                 <div id="book-details">
                     <h2>{{ book.title }}</h2>
-                    <h4>by {{ book.author }}</h4>
+                    <span>
+                        <h4>by </h4>
+                        {% for author in book.author %}
+                            <h4>{{ author }}</h4>
+                        {% endfor %}
+                    </span>
                     <hr>
                     <p>ISBN: <span>{{ book.isbn }}</span></p>
                     <p>Rating: <span>{{ book.average_rating }}</span></p>
