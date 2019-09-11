@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user
 
 from catalog import db, bcrypt
-from catalog.models import User, Book
+from catalog.models import User, Book, Author
 from catalog.users.forms import LoginForm, RegistrationForm
 
 main = Blueprint('main', __name__)
@@ -58,4 +58,5 @@ def register_user():
 @main.route('/home')
 def home():
     num_pages = Book.query.paginate().pages
-    return render_template('home.html', current_user=current_user, num_pages=num_pages)
+    authors = Author.query.all()
+    return render_template('home.html', current_user=current_user, num_pages=num_pages, authors=authors)

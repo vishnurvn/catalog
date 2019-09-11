@@ -17,9 +17,9 @@
         <div class="card card-body">
             <form action="">
                 <select class="form-control form-control-sm">
-                    <option>Small select</option>
-                    <option>Small select</option>
-                    <option>Small select</option>
+                    {% for author in authors %}
+                    <option>{{ author.name }}</option>
+                    {% endfor %}
                 </select>
             </form>
         </div>

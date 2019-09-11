@@ -54,10 +54,11 @@
                 <div id="book-details">
                     <h2>{{ book.title }}</h2>
                     <span>
-                        <h4>by </h4>
-                        {% for author in book.author %}
-                            <h4>{{ author }}</h4>
-                        {% endfor %}
+                        <h4>by 
+                            {% for author in book.author %}
+                                <a href="#">{{ author }}</a>
+                            {% endfor %}
+                        </h4>
                     </span>
                     <hr>
                     <p>ISBN: <span>{{ book.isbn }}</span></p>

@@ -21,9 +21,13 @@ def create_app(config_class=Config):
     from catalog.main.routes import main
     from catalog.users.routes import users
     from catalog.books.routes import books
+    from catalog.admin.routes import admin
+    from catalog.errors.handlers import errors
 
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(books)
+    app.register_blueprint(admin)
+    app.register_blueprint(errors)
 
     return app
