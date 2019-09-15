@@ -1,51 +1,17 @@
 {% extends 'nav.html' %}
 {% block content %}
 <div class="content-container">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-    </button>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Borrow Request</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Email has been sent to the admin</p>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="grid-container">
         <div>
             <div class="card">
                 <div class="card-body">
                     <img src="{{ url_for('static', filename='media/cover.jpg') }}" alt="" id="book-pic">
                     <hr>
-                    <div>
-                        {% if book.is_borrowed %}
-                            {% if book.borrower == current_user %}
-                                <button type="button" class="btn btn-success" id="borrow-button" disabled>Borrowed</button>
-                            {% else %}
-                                <button type="button" class="btn btn-secondary" id="borrow-button" disabled>Unavailable</button>
-                                <div>
-                                    <p>Next available: <span>{{ book.next_available() }}</span></p>
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            {% if current_user.is_authenticated %}
-                                <button type="button" class="btn btn-primary" id="borrow-button" onclick="borrowBook({{ book.id }})">Borrow</button>
-                            {% else %}
-                                <button type="button" class="btn btn-primary" id="borrow-button" data-toggle="tooltip" data-placement="top" title="Login to borrow this book" disabled>Borrow</button>
-                            {% endif %}
-                        {% endif %}
-                    </div>
+                    {% if book.is_borrowed %}
+                    <div class="alert alert-danger" role="alert">{{ book.next_available() }}</div>
+                    {% else %}
+                    <div class="alert alert-success" role="alert">Available</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

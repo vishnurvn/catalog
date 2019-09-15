@@ -1,9 +1,9 @@
-from datetime import timedelta, datetime
+from calendar import month_name
+from datetime import timedelta
 
 from flask_login import UserMixin
 
 from catalog import db, login_manager
-from catalog.exceptions import BorrowLimitExceeded
 
 
 @login_manager.user_loader
@@ -38,17 +38,11 @@ class Book(db.Model):
         return '{}'.format(self.title)
 
     def next_available(self):
-        return (self.borrowed_date + timedelta(days=3)).date()
+        return_date = self.borrowed_date + timedelta(days=3)
+        return "Available on: {} {} {}".format(return_date.day, month_name[return_date.month], return_date.year)
 
     def availability(self):
         return 'Unavailable' if self.is_borrowed else 'Available'
-
-    def borrow_book(self, user):
-        if user.num_borrowed_books >= user.BORROW_LIMIT:
-            raise BorrowLimitExceeded('Borrow limit exceeded')
-        self.is_borrowed = True
-        self.borrower = user
-        self.borrowed_date = datetime.now()
 
 
 class Author(db.Model):

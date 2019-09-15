@@ -1,38 +1,59 @@
 {% extends './nav.html' %}
 {% block content %}
 <div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="add-user-modal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input class="form-control" id="username" placeholder="user.name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" placeholder="user.name@domain.com" type="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" placeholder="Passw0rd" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm</label>
+                            <input class="form-control" id="confirm-password" placeholder="Passw0rd" type="password">
+                        </div>
+                        <div class="form-group">
+                            <label for="first-name">First Name</label>
+                            <input class="form-control" id="first-name" placeholder="first" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name</label>
+                            <input class="form-control" id="last-name" placeholder="last" type="text">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <div class="form">
+                                <input class="btn btn-primary" type="submit" value="Submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2>Users</h2>
+    </div>
+    <div id="user"></div>
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -42,12 +63,41 @@
     </nav>
 </div>
 <div>
-    <hr>
     <button class="btn btn-danger" type="button">Delete</button>
     <button class="btn btn-warning" type="button">Modify Permissions</button>
     <div aria-label="Basic example" class="btn-group" role="group">
-        <button class="btn btn-primary" type="button">Add User</button>
+        <button class="btn btn-primary" data-target="#add-user-modal" data-toggle="modal" type="button">Add User
+        </button>
         <button class="btn btn-primary" type="button">Add Users(Bulk)</button>
     </div>
 </div>
+<hr>
+<div>
+    <div>
+        <h2>Books</h2>
+    </div>
+    <div id="books"></div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </nav>
+</div>
+<div>
+    <button class="btn btn-danger" type="button">Delete</button>
+    <div aria-label="Basic example" class="btn-group" role="group">
+        <button class="btn btn-primary" type="button">Add Book</button>
+        <button class="btn btn-primary" type="button">Add Books(Bulk)</button>
+    </div>
+</div>
+{% endblock %}
+{% block script_block %}
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="{{ url_for('static', filename='react_components/admin/grid.js') }}" type="text/babel"></script>
 {% endblock %}

@@ -5,6 +5,7 @@ class BookList extends React.Component {
             data: null,
             page: null
         }
+        this.bookListRef = React.createRef();
     }
 
     getData = (page) => {
@@ -67,10 +68,10 @@ class BookList extends React.Component {
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
-                                <h5 className="card-title">{item.title}</h5>
+                                <h5 className="card-title"><a class="card-link" href={`/book/${item.id}`} aria-disabled="true">{item.title}</a></h5>
                                 <p className="card-text">by {authors}</p>
                                 <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <a href={`/book/${item.id}`} className="btn btn-primary">Borrow Book</a>
+                                <p className="card-text">Available</p>
                             </div>
                         </div>
                     </div>
@@ -80,6 +81,7 @@ class BookList extends React.Component {
         return (
             <div>
                 <h4>Showing page {this.state.page} out of {this.state.data.book_data.length}</h4>
+                <div ref={this.bookListRef}/>
                 {results}
                 <nav aria-label="Page navigation example">
                     <ul className="pagination justify-content-center">

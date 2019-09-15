@@ -14,14 +14,16 @@
         </div>
     </div>
     <div class="collapse multi-collapse" id="filter-collapse">
-        <div class="card card-body">
-            <form action="">
-                <select class="form-control form-control-sm">
-                    {% for author in authors %}
-                    <option>{{ author.name }}</option>
-                    {% endfor %}
-                </select>
-            </form>
+        <form action="">
+            <select class="form-control form-control-sm">
+                {% for author in authors %}
+                <option>{{ author.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+        <div class="form-check">
+            <input class="form-check-input" id="show-available-checkbox" type="checkbox">
+            <label class="form-check-label" for="defaultCheck1">Show Available</label>
         </div>
     </div>
     <div class="book-list">

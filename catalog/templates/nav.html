@@ -1,21 +1,46 @@
 {% extends 'base.html' %}
 {% block body %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div aria-hidden="true" aria-labelledby="login-modal" class="modal fade" id="login-modal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-body">
+                <form action="">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" placeholder="user.name" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" id="password" placeholder="Passw0rd" type="password">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <div class="form">
+                            <input class="btn btn-primary" type="submit" value="Login">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container">
-        <h2 class="heading"><a class="nav-link" href="{{ url_for('main.home') }}">Catalog<span
-                class="sr-only">(current)</span></a></h2>
+        <h2 class="heading">Catalog</h2>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav justify-content-end">
                 {% if current_user.is_admin %}
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ url_for('admin.display_users') }}">Users<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">Users<span class="sr-only">(current)</span></a>
                     </li>
                 {% endif %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('main.home') }}">Home<span class="sr-only">(current)</span></a>
+                </li>
                 {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -28,7 +53,8 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('main.login') }}">Login<span class="sr-only">(current)</span></a>
+                        <button class="nav-link" data-target="#login-modal" data-toggle="modal" type="button">Login<span
+                                class="sr-only">(current)</span></button>
                     </li>
                 {% endif %}
             </ul>
