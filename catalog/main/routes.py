@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, flash, url_for
+from flask import render_template, Blueprint, redirect, flash, url_for, request
 from flask_login import current_user, login_user, logout_user
 
 from catalog import db, bcrypt
@@ -11,16 +11,19 @@ main = Blueprint('main', __name__)
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
+        print(request.path)
         return redirect(url_for('main.home'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(username=login_form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
+            print(request.path)
             return redirect(url_for('main.home'))
         else:
             flash('Login unsuccessful. Check your username or password', 'danger')
-    return render_template('login.html', title='Login', form=form)
+        print(request.path)
+    return redirect(url_for('main.home'))
 
 
 @main.route('/logout')
@@ -59,4 +62,6 @@ def register_user():
 def home():
     num_pages = Book.query.paginate().pages
     authors = Author.query.all()
-    return render_template('home.html', current_user=current_user, num_pages=num_pages, authors=authors)
+    login_form = LoginForm()
+    return render_template('home.html', current_user=current_user, num_pages=num_pages, authors=authors,
+                           login_form=login_form)

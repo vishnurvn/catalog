@@ -136,3 +136,8 @@ fieldset > legend {
     border-radius: 5px;
     margin-top: 15%;
 }
+
+#login-button {
+    background: none;
+    border: none;
+}

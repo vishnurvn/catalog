@@ -1,9 +1,8 @@
-from flask import render_template, Blueprint, redirect, url_for, flash, abort, jsonify
-from flask_login import current_user, login_user
+from flask import render_template, Blueprint, redirect, url_for, jsonify
+from flask_login import current_user, login_required
 
-from catalog import bcrypt
 from catalog.models import User, Book
-from catalog.users.forms import LoginForm
+from catalog.users.forms import LoginForm, RegistrationForm
 
 admin = Blueprint('admin', __name__)
 
@@ -28,34 +27,18 @@ def display_books(page):
     } for book in books.items])
 
 
-@admin.route('/admin/', methods=['GET', 'POST'])
-@admin.route('/admin/login', methods=['GET', 'POST'])
-def login_admin():
-    if current_user.is_authenticated and current_user.is_admin:
-        return redirect(url_for('admin.admin_dash'))
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is None:
-            abort(403)
-        else:
-            if user.is_admin and bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('admin.admin_dash'))
-            else:
-                flash('Login unsuccessful. Check your username or password', 'danger')
-    return render_template('admin/login.html', form=form)
-
-
+@login_required
 @admin.route('/admin/home')
-def admin_dash():
+def admin_home():
+    login_form = LoginForm()
+    registration_form = RegistrationForm
     if current_user.is_authenticated:
         if current_user.is_admin:
-            return render_template('admin/home.html')
+            return render_template('admin/home.html', login_form=login_form, registration_form=registration_form)
         else:
             return render_template(url_for('errors.error_403'))
     else:
-        return redirect(url_for('admin.login_admin'))
+        return redirect(url_for('main.home'))
 
 
 def add_user():

@@ -1,61 +1,98 @@
 {% extends 'base.html' %}
 {% block body %}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div aria-hidden="true" aria-labelledby="login-modal" class="modal fade" id="login-modal" role="dialog"
-         tabindex="-1">
-        <div class="modal-dialog" role="document">
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
-                <form action="">
+                <form action="{{ url_for('main.login') }}" method="POST">
+                    {{ login_form.hidden_tag() }}
                     <div class="form-group">
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
                         <label for="username">Username</label>
-                        <input class="form-control" id="username" placeholder="user.name" type="text">
+                        {{ login_form.username(class="form-control", placeholder="Username", id="username") }}
+                        {% if login_form.username.errors %}
+                        {% for error in login_form.username.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input class="form-control" id="password" placeholder="Passw0rd" type="password">
+                        <label for="exampleInputPassword1">Password</label>
+                        {{ login_form.password(class="form-control", placeholder="Password", id="password") }}
+                        {% if login_form.password.errors %}
+                        {% for error in login_form.password.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                        <div class="form">
-                            <input class="btn btn-primary" type="submit" value="Login">
-                        </div>
+                        <button class="btn btn-primary" type="submit">Login</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <h2 class="heading">Catalog</h2>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav justify-content-end">
-                {% if current_user.is_admin %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Users<span class="sr-only">(current)</span></a>
-                    </li>
-                {% endif %}
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('main.home') }}">Home<span class="sr-only">(current)</span></a>
                 </li>
                 {% if current_user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }}</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ url_for('users.display_profile', username=current_user.username) }}">View profile</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a>
-                        </div>
-                    </li>
+                {% if current_user.is_admin %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('admin.admin_home') }}">Admin<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }}</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ url_for('users.display_profile', username=current_user.username) }}">View profile</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a>
+                    </div>
+                </li>
                 {% else %}
-                    <li class="nav-item">
-                        <button class="nav-link" data-target="#login-modal" data-toggle="modal" type="button">Login<span
-                                class="sr-only">(current)</span></button>
-                    </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
+                            type="button">Login<span
+                            class="sr-only">(current)</span></button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
+                            type="button">Register<span
+                            class="sr-only">(current)</span></button>
+                </li>
                 {% endif %}
             </ul>
         </div>

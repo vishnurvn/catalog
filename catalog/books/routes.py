@@ -1,8 +1,7 @@
 from flask import render_template, Blueprint, jsonify, request
-from flask_login import current_user
 
-from catalog.exceptions import BorrowLimitExceeded
 from catalog.models import Book
+from catalog.users.forms import LoginForm
 
 books = Blueprint('books', __name__)
 
@@ -33,18 +32,5 @@ def get_book_list():
 @books.route('/book/<int:book_id>')
 def display_book_details(book_id):
     book = Book.query.get(book_id)
-    return render_template('book.html', book=book)
-
-
-@books.route('/book/<int:book_id>/borrow')
-def borrow_book(book_id):
-    book = Book.query.filter_by(book_id).first()
-    try:
-        book.borrow_book(current_user)
-    except BorrowLimitExceeded:
-        return jsonify({
-            'status': 'error'
-        })
-    return jsonify({
-        'status': 'ok'
-    })
+    login_form = LoginForm()
+    return render_template('book.html', book=book, login_form=login_form)
