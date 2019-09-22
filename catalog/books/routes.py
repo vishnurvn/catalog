@@ -8,7 +8,6 @@ books = Blueprint('books', __name__)
 
 @books.route('/get_book_list', methods=['POST'])
 def get_book_list():
-    print("something")
     page = request.json['page']
     # author filter
     book_list = Book.query.paginate(page=page, per_page=10)

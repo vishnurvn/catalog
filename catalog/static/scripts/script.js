@@ -4,3 +4,4 @@ let homeFlag = document.getElementById('flag')
 searchField.addEventListener('change', () => {
     console.log(searchField.value)
 })
+

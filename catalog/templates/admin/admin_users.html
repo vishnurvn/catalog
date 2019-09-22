@@ -1,0 +1,161 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="flex-item-two">
+    <h2 class="title">Users</h2>
+    <hr>
+    <form action="">
+        <div class="form-group">
+            <input aria-describedby="emailHelp" class="form-control" id="search" placeholder="Search" type="text">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <div aria-hidden="true" aria-labelledby="add-user-modal" class="modal fade" id="add-user-modal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/database/add_user" class="margin-none" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="form-col">
+                            <div class="form-group">
+                                {{ form.username(class="form-control", placeholder="Username") }}
+                                {% if form.username.errors %}
+                                {% for error in form.username.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.email(class="form-control", placeholder="Email") }}
+                                {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.first_name(class="form-control", placeholder="First Name") }}
+                                {% if form.first_name.errors %}
+                                {% for error in form.first_name.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.last_name(class="form-control", placeholder="Last Name") }}
+                                {% if form.last_name.errors %}
+                                {% for error in form.last_name.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                            <div class="form-group margin-none">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="add-users-modal" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Users-File upload</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Add users here</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                    <button class="btn btn-primary" type="button">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" data-target="#add-user-modal" data-toggle="modal" type="button">Add User</button>
+    <button class="btn btn-primary" data-target="#add-users-modal" data-toggle="modal" type="button">Add Users</button>
+    <button class="btn btn-danger" data-target="#delete-users-modal" data-toggle="modal" type="button">Delete</button>
+    <button class="btn btn-warning" type="button">Change Permission</button>
+    <hr>
+    <form action="/admin/database/delete_users" method="post">
+        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="delete-users-modal"
+             role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you user you want to delete the selected users?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col" width="20px"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Username</th>
+                <th scope="col">Admin</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users.items %}
+            <tr>
+                <td><input name="user" type="checkbox" value="{{ user.id }}"></td>
+                <td>{{ user.full_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    {% if user.is_admin == 1 %}
+                    <p>Yes</p>
+                    {% else %}
+                    <p>No</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <ul class="pagination justify-content-center">
+        {% for idx in range(1, page_num) %}
+        <li class="page-item"><a class="page-link" href="?page={{idx}}">{{ idx }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

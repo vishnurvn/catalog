@@ -141,3 +141,39 @@ fieldset > legend {
     background: none;
     border: none;
 }
+
+#side-body {
+    min-width: 200px;
+    max-width: 20%;
+    background-color: gray;
+}
+
+.dashboard-pane {
+    display: inline-block;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.flex-item-one {
+    width: 200px;
+    margin: 10px;
+    flex-shrink: 0;
+}
+
+.flex-item-two {
+    margin: 10px;
+    width: 100%;
+    flex-grow: auto;
+}
+
+.title {
+    margin: 16px 8px;
+}
+
+.sub-title {
+    text-transform: uppercase;
+}

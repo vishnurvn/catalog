@@ -83,13 +83,11 @@ class BookList extends React.Component {
                 <h4>Showing page {this.state.page} out of {this.state.data.book_data.length}</h4>
                 <div ref={this.bookListRef}/>
                 {results}
-                <nav aria-label="Page navigation example">
-                    <ul className="pagination justify-content-center">
-                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                            {pagination}
-                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
+                <ul className="pagination justify-content-center">
+                    <li className="page-item"><a className="page-link" href="#">Previous</a></li>
+                        {pagination}
+                    <li className="page-item"><a className="page-link" href="#">Next</a></li>
+                </ul>
             </div>
         )
     }

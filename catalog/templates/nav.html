@@ -54,48 +54,49 @@
     </div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <h2 class="heading">Catalog</h2>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <h2 class="heading">Catalog</h2>
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler"
+            data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav justify-content-end">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('main.home') }}">Home<span class="sr-only">(current)</span></a>
-                </li>
-                {% if current_user.is_authenticated %}
-                {% if current_user.is_admin %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('admin.admin_home') }}">Admin<span
-                            class="sr-only">(current)</span></a>
-                </li>
-                {% endif %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">{{ current_user.first_name }}</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ url_for('users.display_profile', username=current_user.username) }}">View profile</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a>
-                    </div>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
-                            type="button">Login<span
-                            class="sr-only">(current)</span></button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
-                            type="button">Register<span
-                            class="sr-only">(current)</span></button>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('main.home') }}">Home<span class="sr-only">(current)</span></a>
+            </li>
+            {% if current_user.is_authenticated %}
+            {% if current_user.is_admin %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('admin.dashboard') }}">Admin<span
+                        class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
+            <li class="nav-item dropdown">
+                <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                   href="#"
+                   id="navbarDropdown" role="button">{{ current_user.first_name }}</a>
+                <div aria-labelledby="navbarDropdown" class="dropdown-menu">
+                    <a class="dropdown-item"
+                       href="{{ url_for('users.display_profile', username=current_user.username) }}">View profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('main.logout') }}">Logout</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
+                        type="button">Login<span
+                        class="sr-only">(current)</span></button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link" data-target="#exampleModal" data-toggle="modal" id="login-button"
+                        type="button">Register<span
+                        class="sr-only">(current)</span></button>
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </nav>
 <div class="container">

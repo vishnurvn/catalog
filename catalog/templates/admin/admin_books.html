@@ -1,0 +1,122 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="flex-item-two">
+    <h2 class="title">Books</h2>
+    <hr>
+    <form action="">
+        <div class="form-group">
+            <input aria-describedby="emailHelp" class="form-control" id="search" placeholder="Search" type="text">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <button class="btn btn-primary" data-target="#add-user-modal" data-toggle="modal" type="button">Add Book</button>
+    <button class="btn btn-primary" type="button">Add Books</button>
+    <button class="btn btn-danger" data-target="#delete-books-modal" data-toggle="modal" type="button">Delete</button>
+    <hr>
+    {#
+    <form class="margin-none" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-col">
+            <div class="form-group">
+                {{ form.username(class="form-control", placeholder="Username") }}
+                {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.email(class="form-control", placeholder="Email") }}
+                {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.first_name(class="form-control", placeholder="First Name") }}
+                {% if form.first_name.errors %}
+                {% for error in form.first_name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.last_name(class="form-control", placeholder="Last Name") }}
+                {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group margin-none">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </div>
+    </form>
+    #}
+    <form action="" method="post">
+        <div aria-hidden="true" aria-labelledby="delete-books-modal" class="modal fade" id="delete-books-modal"
+             role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you user you want to delete the selected books?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col" width="20px"></th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Book Title</th>
+                <th scope="col">Borrowed</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books.items %}
+            <tr>
+                <td><input type="checkbox" value="{{ book.id }}"></td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.title }}</td>
+                <td>
+                    {% if book.is_borrowed == 1 %}
+                    <p>Yes</p>
+                    {% else %}
+                    <p>No</p>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+    <ul class="pagination justify-content-center">
+        {% for idx in range(1, page_num) %}
+        <li class="page-item"><a class="page-link" href="?page={{idx}}">{{ idx }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, flash, url_for, request
+from flask import render_template, Blueprint, redirect, flash, url_for
 from flask_login import current_user, login_user, logout_user
 
 from catalog import db, bcrypt
@@ -11,18 +11,15 @@ main = Blueprint('main', __name__)
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        print(request.path)
         return redirect(url_for('main.home'))
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, login_form.password.data):
             login_user(user)
-            print(request.path)
             return redirect(url_for('main.home'))
         else:
             flash('Login unsuccessful. Check your username or password', 'danger')
-        print(request.path)
     return redirect(url_for('main.home'))
 
 

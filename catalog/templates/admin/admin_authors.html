@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+{% block content %}
+<div class="flex-item-two">
+    <h2 class="title">Authors</h2>
+    <hr>
+    <form action="">
+        <div class="form-group">
+            <input aria-describedby="emailHelp" class="form-control" id="search" placeholder="Search" type="text">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <form action="">
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th scope="col" width="20px"></th>
+                <th scope="col">Author Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for author in authors.items %}
+            <tr>
+                <td><input type="checkbox" value="{{ author.id }}"></td>
+                <td>{{ author.name }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{% endblock %}
